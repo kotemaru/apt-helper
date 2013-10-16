@@ -1,0 +1,12 @@
+package sample.apt;
+
+public class Version {
+	public static final String ID = "$Id$";
+	public static final String DATE = "$Date$";
+	public static final String REV = "$Rev$";
+	public static final String Author = "$Author$";
+
+	public static void main(String[] args) {
+		System.out.println("apt-sample: "+ID);
+	}
+}
