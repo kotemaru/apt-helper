@@ -1,0 +1,58 @@
+// auto generated.
+#*
+元クラスの public メソッドをオーバライドして呼び出しのトレースを出力する
+ラッパークラスを自動生成する。
+
+定義済変数
+${packageName}      : このクラスのパッケージ名
+${className}        : このクラスのクラス名
+${masterClassDecl}  : アノテーションの定義された元クラスの TypeElement
+${annotation}       : 元クラスに定義されたアノテーション
+${helper}           : ユーザ定義の補助クラスインスタンス
+${environment}      : ProcessorEnvironmentインスタンス
+*#
+
+package ${packageName};
+public class ${className}
+		extends ${masterClassDecl}
+{
+	private static final java.util.logging.Logger __LOG =
+			java.util.logging.Logger.getLogger("${masterClassDecl}");
+
+## 元クラスのメソッドのループ
+#foreach ($method in $helper.getMethods($masterClassDecl))
+
+## publicメソッドのみ
+#if ($helper.isPublic($method))
+	public ${method.returnType} ${method.simpleName}(${helper.getParams($method)})
+			${helper.getThrows($method)}
+	{
+		__LOG.info("${method.simpleName}:start");
+		try {
+## 戻り値の型がvoidなら戻り値無視のコードを生成
+#if ($method.returnType == "void")
+			super.${method.simpleName}(${helper.getArguments($method)});
+			__LOG.info("${method.simpleName}:return");
+#else
+			${method.returnType} val = super.${method.simpleName}(${helper.getArguments($method)});
+			__LOG.info("${method.simpleName}:return:"+val);
+			return val;
+#end
+		} catch (Throwable t) {
+			__LOG.info("${method.simpleName}:error:"+t);
+## メソッド毎の注釈で @TraceOption(errorStack=true) ならスタック表示コード生成。
+#if ($helper.isErrorStack($method))
+			__LOG.throwing("${className}","${method.simpleName}",t);
+#end
+			if (t instanceof Error) throw (Error)t;
+			if (t instanceof RuntimeException) throw (RuntimeException)t;
+## メソッドのthrows宣言に対応した例外処理コード生成。
+#foreach ($excep in $method.getThrownTypes())
+			if (t instanceof $excep) throw ($excep)t;
+#end
+			throw new Error(t);
+		}
+	}
+#end
+#end
+}

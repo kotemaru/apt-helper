@@ -3,30 +3,28 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="apt-helper-blank">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="apt-helper-blank">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../../usr/local/lib/eclipse"/>
+    <property name="ECLIPSE_HOME" value="../../../../usr/lib/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
     <path id="apt-helper-blank.classpath">
-        <pathelement location="classes"/>
+        <pathelement location="build/classes"/>
         <pathelement location="lib/commons-collections-3.2.1.jar"/>
-        <pathelement location="lib/apt-helper-1.0.jar"/>
         <pathelement location="lib/commons-lang-2.4.jar"/>
-        <pathelement location="lib/tools.jar"/>
         <pathelement location="lib/velocity-1.7.jar"/>
+        <pathelement location="lib/apt-helper-1.1.jar"/>
     </path>
     <target name="init">
-        <mkdir dir="classes"/>
-        <copy includeemptydirs="false" todir="classes">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="src">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
-        <copy includeemptydirs="false" todir="classes">
+        <copy includeemptydirs="false" todir="build/classes">
             <fileset dir=".apt_generated">
                 <include name="**"/>
                 <include name="META-INF/**"/>
@@ -36,18 +34,15 @@
         </copy>
     </target>
     <target name="clean">
-        <delete dir="classes"/>
+        <delete dir="build/classes"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="classes" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="apt-helper-blank.classpath"/>
-        </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="classes" source="${source}" target="${target}">
             <src path=".apt_generated"/>
             <include name="**"/>
             <include name="META-INF/**"/>

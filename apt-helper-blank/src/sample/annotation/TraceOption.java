@@ -6,8 +6,7 @@ import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 
 @Retention(RetentionPolicy.CLASS)
-@Target(ElementType.FIELD)
-public @interface Attrs {
-	boolean setter() default true;
-	boolean getter() default true;
+@Target(ElementType.METHOD)
+public @interface TraceOption {
+	boolean errorStack() default false;
 }
