@@ -2,9 +2,10 @@
 
 <project default="jar" basedir=".">
 
-	<property name="target.jar" value="${basedir}/apt-helper-1.1.jar"/>
+	<property name="build" value="${basedir}/build"/>
+	<property name="target.jar" value="${build}/apt-helper-1.1.jar"/>
 	<property name="source" value="${basedir}/src"/>
-	<property name="classes" value="${basedir}/classes"/>
+	<property name="classes" value="${build}/classes"/>
 	<property name="lib" value="${basedir}/lib"/>
 	
 	<property name="test" value="${basedir}/test"/>
@@ -15,7 +16,7 @@
 
 	<target name="jar">
 		<jar jarfile="${target.jar}" manifest="MANIFEST.MF">
-			<fileset dir="classes" >
+			<fileset dir="${classes}" >
 				<include name="**"/>
 				<include name="META-INF/**"/>
 			</fileset>
