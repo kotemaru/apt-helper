@@ -1,29 +1,14 @@
 package test.master;
-import test.autobean.*;
 
 public class TestMain {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		TestBean bean = new TestBean();
-		bean.setAge(10);
-		bean.setEmail("abg@efg.com");
-		bean.setFirstName("jone");
-		bean.setLastName("smith");
-		bean.setTel("090-1234-5678");
-
-		System.out.println("["
-				+"\nAge="+bean.getAge()
-				+"\nEmail="+bean.getEmail()
-				+"\nName="+bean.getFirstName()
-				+" "+bean.getLastName()
-				+"\nTel="+bean.getTel()
-				+"\nHoge="+bean.getHoge()
-				+"\n]"
-		);
-
+	public static void main(String[] args) throws Exception  {
+		SimpleAnnoTestImpl simpleAnnoTest = new SimpleAnnoTestImpl();
+		System.out.println("simpleAnnoTest.hogehoge(10)="+simpleAnnoTest.hogehoge(10));
+		System.out.println("simpleAnnoTest.hogehoge(20)="+simpleAnnoTest.hogehoge(20));
+		
+		TraceDelegateTest traceDelegateTest = new TraceDelegateTestTrace();
+		traceDelegateTest.println("==>"+traceDelegateTest.getString(traceDelegateTest));
 	}
 
 }

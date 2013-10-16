@@ -11,5 +11,5 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/velocity-1.7.jar"/>
 	<classpathentry kind="lib" path="lib/apt-helper-1.1.jar"/>
-	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>

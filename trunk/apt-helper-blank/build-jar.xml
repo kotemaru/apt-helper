@@ -3,9 +3,10 @@
 <project default="jar" basedir=".">
 	<import file="build.xml"/>
 	
-	<property name="target.jar" value="${basedir}/apt-sample-1.1.jar"/>
+	<property name="build" value="${basedir}/build"/>
+	<property name="target.jar" value="${build}/apt-sample-1.1.jar"/>
 	<property name="src" value="${basedir}/src"/>
-	<property name="classes" value="${basedir}/classes"/>
+	<property name="classes" value="${build}/classes"/>
 	<property name="lib" value="${basedir}/lib"/>
 	<property name="apt_gen" value="${basedir}/.apt_generated"/>
 	
@@ -52,7 +53,7 @@
 	<target name="jar" depends="apt,build">
 		<copydir dest="${classes}/META-INF" src="${apt_gen}/META-INF"></copydir>
 		<jar jarfile="${target.jar}" manifest="MANIFEST.MF">
-			<fileset dir="classes" >
+			<fileset dir="${classes}" >
 				<include name="**"/>
 				<include name="META-INF/**"/>
 			</fileset>
@@ -93,6 +94,7 @@
 		<mkdir dir="${test.apt_gen}" />
 		<delete dir="${test.classes}" />
 		<mkdir dir="${test.classes}" />
+		<!-- 
 		<apt 
 			srcdir="${test.src}"
 			preprocessdir="${test.apt_gen}" 
@@ -104,7 +106,19 @@
 			classpathref="test.apt-path"
 		>
 		</apt>
-
+		-->
+		<property name="apt-cp" refid="test.apt-path"/>
+		<javac 
+			srcdir="${test.src}"
+			destdir="${test.classes}" 
+			debug="on" 
+			encoding="utf-8" 
+			classpathref="test.apt-path"
+		> 
+	     <compilerarg line="-processorpath ${apt-cp}"/>
+	     <compilerarg line="-s ${test.apt_gen}"/>
+		</javac>
+		
 		<java classpathref="test-path" classname="test.master.TestMain"></java>
 			
 	</target>
