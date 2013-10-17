@@ -25,7 +25,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.app.Velocity;
 
 /**
- * Velocity を利用してソースを生成する注釈処理の規定クラス。
+ * Velocity を利用してソースを生成する注釈処理の基底クラス。
  * <br>- 基本的にクラスの注釈を処理する。
  * <br>- メソッド/フィールド単位の注釈はクラスの処理内で行う。
  * <br>- 継承するクラスは以下の注釈を必要とする。
